@@ -1,6 +1,8 @@
 package com.example.otams_project;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     private String email;
     private String password;
     private String role;
@@ -32,7 +34,11 @@ public class Account {
         return  user;
     }
 
-    public void setPassword(String newPassword) {
-        this.password = newPassword;
+    public void login() {
+
+    }
+
+    public void logout() {
+
     }
 }
