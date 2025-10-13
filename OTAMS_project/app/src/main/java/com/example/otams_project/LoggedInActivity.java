@@ -10,17 +10,15 @@ import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class LoggedInActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_logged_in);
+
     }
-    public void onLoginClick(View view){
-        startActivity( new Intent(MainActivity.this , LoginActivity.class));
-    }
-    public void onRegisterClick(View view){
-        startActivity( new Intent(MainActivity.this , RegisterActivity.class));
+    public void onLogoutButtonClick(View view){
+        startActivity( new Intent(LoggedInActivity.this , MainActivity.class));
     }
 }
