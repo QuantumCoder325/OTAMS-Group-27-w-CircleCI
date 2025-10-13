@@ -2,11 +2,8 @@ package com.example.otams_project;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
@@ -17,17 +14,27 @@ public class LoggedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
-        String role =getIntent().getStringExtra("ROLE");
-        if(role==null){
-            role="User";}
+        Account account = (Account) getIntent().getSerializableExtra("ACCOUNT");
+        String roleToDisplay;
+        if(account == null){
+            roleToDisplay ="User";
+        } else if (account.getRole() == null){
+            roleToDisplay ="User";
+        } else {
+            roleToDisplay = account.getRole();
+        }
         TextView welcomeText=findViewById(R.id.textView3);
-        welcomeText.setText("Welcome! Successfully Logged in as "+role);
+        welcomeText.setText("Welcome! Successfully Logged in as " + roleToDisplay);
 
 
 
 
     }
     public void onLogoutButtonClick(View view){
+        Account account = (Account) getIntent().getSerializableExtra("ACCOUNT");
+        if (account != null) {
+            account.logout();
+        }
         startActivity( new Intent(LoggedInActivity.this , MainActivity.class));
     }
 }

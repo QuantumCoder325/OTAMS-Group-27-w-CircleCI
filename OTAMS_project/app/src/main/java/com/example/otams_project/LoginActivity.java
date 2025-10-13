@@ -37,8 +37,9 @@ public class LoginActivity extends AppCompatActivity implements Login {
 
     public void approveSignIn(Account account) {
         Toast.makeText(this, account.getEmail()+ " has signed in, they are a " + account.getRole(), Toast.LENGTH_LONG).show();
+        account.login();
         Intent intent=new Intent(LoginActivity.this,LoggedInActivity.class);
-        intent.putExtra("ROLE",account.getRole());
+        intent.putExtra("ACCOUNT", account);
         startActivity(intent);
     }
 
