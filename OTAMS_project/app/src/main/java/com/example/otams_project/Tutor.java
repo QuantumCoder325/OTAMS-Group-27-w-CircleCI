@@ -23,5 +23,7 @@ public class Tutor extends User {
         tutor.degree = degree;
         tutor.courses = courses;
         tutor.account = account;
+        FirebaseAccessor accessor = new FirebaseAccessor();
+        accessor.writeNewAccount(null, account);
     }
 }

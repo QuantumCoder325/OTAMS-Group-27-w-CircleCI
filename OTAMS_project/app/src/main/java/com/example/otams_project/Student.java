@@ -20,5 +20,7 @@ public class Student extends User {
         Student student = new Student(firstName, lastName, phone);
         student.program = program;
         student.account = account;
+        FirebaseAccessor accessor = new FirebaseAccessor();
+        accessor.writeNewAccount(null, account);
     }
 }

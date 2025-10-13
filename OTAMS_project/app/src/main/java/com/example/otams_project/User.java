@@ -41,6 +41,8 @@ public class User {
         Account account = new Account(email, password, "null");
         User user = new User(firstName, lastName, phone);
         user.account = account;
+        FirebaseAccessor accessor = new FirebaseAccessor();
+        accessor.writeNewAccount(null, account);
     }
 
     }

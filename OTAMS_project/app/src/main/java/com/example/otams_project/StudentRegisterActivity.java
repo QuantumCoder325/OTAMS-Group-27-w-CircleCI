@@ -42,6 +42,7 @@ public class StudentRegisterActivity extends AppCompatActivity {
         String phone = phoneInput.getText().toString();
         String program = programInput.getText().toString();
         Student.register(firstName, lastName, email, password, phone , program);
+
         startActivity( new Intent(StudentRegisterActivity.this , MainActivity.class));
 
 

@@ -10,6 +10,9 @@ import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
 import android.widget.EditText;
 import android.content.Intent;
+import android.widget.Toast;
+
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -30,7 +33,19 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginButtonClick(View view) {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
+        FirebaseAccessor accessor = new FirebaseAccessor();
+        accessor.doesEmailMatchPassword(this, email, password);
 
-        startActivity(new Intent(LoginActivity.this, LoggedInActivity.class));
+
     }
+
+    public void approveSignIn(Account account) {
+        Toast.makeText(this, account.getEmail()+ " has signed in, they are a " + account.getRole(), Toast.LENGTH_LONG).show();
+        startActivity( new Intent(LoginActivity.this , LoggedInActivity.class));
+    }
+
+    public void denySignIn() {
+        Toast.makeText(this, "Failed login", Toast.LENGTH_LONG).show();
+    }
+
 }
