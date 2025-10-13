@@ -40,9 +40,9 @@ public class StudentRegisterActivity extends AppCompatActivity implements Regist
         String phone = phoneInput.getText().toString();
         String program = programInput.getText().toString();
 
-        User student = Student.register(firstName, lastName, email, password, phone , program);
+        Account account = Student.register(firstName, lastName, email, password, phone , program);
         FirebaseAccessor accessor = new FirebaseAccessor();
-        accessor.writeNewAccount(this, student.getAccount());
+        accessor.writeNewAccount(this, account);
 
 
     }

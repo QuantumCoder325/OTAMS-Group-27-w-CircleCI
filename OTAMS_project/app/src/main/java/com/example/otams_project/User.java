@@ -5,8 +5,6 @@ public class User {
     private String lastName;
     private String phone;
 
-    protected Account account;
-
     protected User(String firstName, String lastName, String phone){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -17,7 +15,6 @@ public class User {
         this.firstName = null;
         this.lastName = null;
         this.phone = null;
-        this.account = null;
     }
 
 
@@ -34,17 +31,11 @@ public class User {
     }
 
 
-    public Account getAccount(){
+    public static Account register(String firstName, String lastName, String email , String password, String phone){
+        User user = new User(firstName, lastName, phone);
+        Account account = new Account(email, password, "null", user);
+        FirebaseAccessor accessor = new FirebaseAccessor();
+
         return account;
     }
-    public static User register(String firstName, String lastName, String email , String password, String phone){
-        User user = new User(firstName, lastName, phone);
-        Account account = new Account(email, password, "null");
-        user.account = account;
-        FirebaseAccessor accessor = new FirebaseAccessor();
-        accessor.writeNewAccount(null, account);
-
-        return user;
-    }
-
-    }
+}

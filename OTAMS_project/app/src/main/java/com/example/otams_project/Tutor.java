@@ -4,7 +4,7 @@ public class Tutor extends User {
 
 
     String degree;
-    String[] courses;
+    String courses;
 
     public Tutor(String firstName, String lastName, String phone) {
         super(firstName, lastName, phone);
@@ -13,17 +13,22 @@ public class Tutor extends User {
         super();
     }
 
+    public String getDegree() {
+        return degree;
+    }
+
+    public  String getCourses() {
+        return courses;
+    }
 
 
 
-
-    public static User register(String firstName, String lastName, String email , String password, String phone , String degree, String[] courses) {
+    public static Account register(String firstName, String lastName, String email , String password, String phone , String degree, String courses) {
         Tutor tutor = new Tutor(firstName, lastName, phone);
-        Account account = new Account(email, password, "tutor");
+        Account account = new Account(email, password, "tutor", tutor);
         tutor.degree = degree;
         tutor.courses = courses;
-        tutor.account = account;
 
-        return tutor;
+        return account;
     }
 }

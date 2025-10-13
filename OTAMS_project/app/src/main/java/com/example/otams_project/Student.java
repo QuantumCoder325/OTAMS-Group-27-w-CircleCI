@@ -12,15 +12,16 @@ public class Student extends User {
         super();
     }
 
+    public String getProgram() {
+        return program;
+    }
 
 
-
-    public static User register(String firstName, String lastName, String email , String password, String phone , String program) {
+    public static Account register(String firstName, String lastName, String email , String password, String phone , String program) {
         Student student = new Student(firstName, lastName, phone);
-        Account account = new Account(email, password, "student");
+        Account account = new Account(email, password, "student", student);
         student.program = program;
-        student.account = account;
 
-        return student;
+        return account;
     }
 }

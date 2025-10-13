@@ -42,10 +42,9 @@ public class TutorRegisterActivity extends AppCompatActivity implements Register
         String phone = phoneInput.getText().toString();
         String degree = degreeInput.getText().toString();
         String courses = coursesInput.getText().toString();
-        String[] coursesArray = courses.split(",");
-        User tutor = Tutor.register(firstName, lastName, email, password, phone , degree , coursesArray);
+        Account account = Tutor.register(firstName, lastName, email, password, phone , degree , courses);
         FirebaseAccessor accessor = new FirebaseAccessor();
-        accessor.writeNewAccount(this, tutor.getAccount());
+        accessor.writeNewAccount(this, account);
 
 
 

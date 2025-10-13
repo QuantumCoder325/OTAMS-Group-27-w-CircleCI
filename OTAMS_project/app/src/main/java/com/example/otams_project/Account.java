@@ -4,11 +4,13 @@ public class Account {
     private String email;
     private String password;
     private String role;
+    private User user;
 
-    public Account(String accountEmail, String accountPassword, String accountRole) {
+    public Account(String accountEmail, String accountPassword, String accountRole, User accountUser) {
         this.email = accountEmail;
         this.password = accountPassword;
         this.role = accountRole;
+        this.user = accountUser;
     }
 
     public Account() {
@@ -25,6 +27,9 @@ public class Account {
 
     public String getRole() {
         return role;
+    }
+    public User getUser() {
+        return  user;
     }
 
     public void setPassword(String newPassword) {
