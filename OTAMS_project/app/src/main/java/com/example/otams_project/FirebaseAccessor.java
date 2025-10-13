@@ -52,6 +52,8 @@ public class FirebaseAccessor {
                             if (foundAccount.getPassword() != null) {
                                 if (password.equals(foundAccount.getPassword())) {
                                     caller.approveSignIn(foundAccount);
+                                } else {
+                                    caller.denySignIn();
                                 }
                                 return;
                             }
