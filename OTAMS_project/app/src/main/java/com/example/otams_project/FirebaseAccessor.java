@@ -9,8 +9,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import kotlin.Suppress;
-
 public class FirebaseAccessor {
 
     private final DatabaseReference database;
@@ -19,6 +17,7 @@ public class FirebaseAccessor {
         database = FirebaseDatabase.getInstance().getReference();
     }
 
+    @SuppressWarnings("unused")
     public void writeNewAccount(MainActivity caller, Account account) {
 
         Query query = database.child("account").orderByChild("email").equalTo(account.getEmail());
@@ -26,14 +25,10 @@ public class FirebaseAccessor {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        caller.writeAccountFail();
-                        return;
-                    }
+                    caller.writeAccountFail();
                 } else {
                     createAccountEntry(account);
                     caller.writeAccountSuccess();
-
                 }
             }
 
