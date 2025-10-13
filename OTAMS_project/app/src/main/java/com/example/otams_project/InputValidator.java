@@ -11,6 +11,8 @@ public class InputValidator {
     private static final int DASH = 45;
     private static final int ZERO = 48;
     private static final int NINE = 57;
+    private static final int ATSIGN = 64;
+    private static final int PERIOD = 46;
 
 
     //Returns 0 if name is null
@@ -92,5 +94,34 @@ public class InputValidator {
         }
 
         return 1;
+    }
+
+    //Returns 0 if email is null
+    //Returns 1 if email is valid
+    //Returns -1 if email is missing @ or .
+    public static int validateEmailAddress(String emailAddress) {
+
+        if (emailAddress == null) {
+            return 0;
+        }
+
+        char[] emailAddressArray = emailAddress.toCharArray();
+
+        boolean hasAtSign = false;
+        boolean hasPeriod = false;
+        for (char c : emailAddressArray) {
+            if (c == ATSIGN) {
+                hasAtSign = true;
+            }
+            if (c == PERIOD) {
+                hasPeriod = true;
+            }
+        }
+
+        if (hasPeriod && hasAtSign) {
+            return 1;
+        }
+
+        return -1;
     }
 }

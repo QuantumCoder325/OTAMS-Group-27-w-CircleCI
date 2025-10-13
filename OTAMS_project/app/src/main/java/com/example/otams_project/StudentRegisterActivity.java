@@ -47,6 +47,8 @@ public class StudentRegisterActivity extends FieldValidatorActivity implements R
             return;
         if (this.isPhoneNumberInvalid(phone))
             return;
+        if (this.isEmailAddressInvalid(email))
+            return;
 
         Account account = Student.register(firstName, lastName, email, password, phone , program);
         FirebaseAccessor accessor = new FirebaseAccessor();

@@ -36,11 +36,11 @@ public class TutorRegisterActivity extends FieldValidatorActivity implements Reg
     public void onRegisterButtonClick(View view){
         String firstName = firstNameInput.getText().toString().strip();
         String lastName = lastNameInput.getText().toString().strip();
-        String email = emailInput.getText().toString();
+        String email = emailInput.getText().toString().strip();
         String password = passwordInput.getText().toString();
-        String phone = phoneInput.getText().toString();
-        String degree = degreeInput.getText().toString();
-        String courses = coursesInput.getText().toString();
+        String phone = phoneInput.getText().toString().strip();
+        String degree = degreeInput.getText().toString().strip();
+        String courses = coursesInput.getText().toString().strip();
 
         if (this.isNameInvalid("First name", firstName))
             return;
@@ -49,6 +49,8 @@ public class TutorRegisterActivity extends FieldValidatorActivity implements Reg
         if (this.isPasswordInvalid(password))
             return;
         if (this.isPhoneNumberInvalid(phone))
+            return;
+        if (this.isEmailAddressInvalid(email))
             return;
 
         Account account = Tutor.register(firstName, lastName, email, password, phone , degree , courses);

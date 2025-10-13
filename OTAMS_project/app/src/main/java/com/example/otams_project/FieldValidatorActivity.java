@@ -65,4 +65,20 @@ public class FieldValidatorActivity extends AppCompatActivity {
                 return true;
         }
     }
+
+    protected boolean isEmailAddressInvalid(String value) {
+        switch (InputValidator.validateEmailAddress(value)) {
+            case 0:
+                Toast.makeText(this, "Email address cannot be null", Toast.LENGTH_LONG).show();
+                return true;
+            case 1:
+                return false;
+            case -1:
+                Toast.makeText(this, "Email address is missing an @ or a .", Toast.LENGTH_LONG).show();
+                return true;
+            default:
+                Toast.makeText(this, "Phone number produces unknown error", Toast.LENGTH_LONG).show();
+                return true;
+        }
+    }
 }
