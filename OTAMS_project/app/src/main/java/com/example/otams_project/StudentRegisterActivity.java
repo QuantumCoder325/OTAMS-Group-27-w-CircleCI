@@ -63,8 +63,8 @@ public class StudentRegisterActivity extends FieldValidatorActivity implements R
         Toast.makeText(this, "Email already in use", Toast.LENGTH_LONG).show();
     }
     public void writeAccountSuccess() {
-        Toast.makeText(this, "Successfully created student account", Toast.LENGTH_LONG).show();
-        startActivity( new Intent(StudentRegisterActivity.this , MainActivity.class));
+        Toast.makeText(this, "Registration submitted for approval", Toast.LENGTH_LONG).show();
+        startActivity( new Intent(StudentRegisterActivity.this , PendingApprovalActivity.class));
     }
 
 }

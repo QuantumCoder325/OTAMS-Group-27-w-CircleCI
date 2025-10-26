@@ -70,8 +70,8 @@ public class TutorRegisterActivity extends FieldValidatorActivity implements Reg
         Toast.makeText(this, "Email already in use", Toast.LENGTH_LONG).show();
     }
     public void writeAccountSuccess() {
-        Toast.makeText(this, "Successfully created tutor account", Toast.LENGTH_LONG).show();
-        startActivity( new Intent(TutorRegisterActivity.this , MainActivity.class));
+        Toast.makeText(this, "Registration submitted for approval", Toast.LENGTH_LONG).show();
+        startActivity( new Intent(TutorRegisterActivity.this , PendingApprovalActivity.class));
     }
 
 }
