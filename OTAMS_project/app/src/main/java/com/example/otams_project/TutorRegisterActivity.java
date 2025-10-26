@@ -72,6 +72,7 @@ public class TutorRegisterActivity extends FieldValidatorActivity implements Reg
     public void writeAccountSuccess() {
         Toast.makeText(this, "Registration submitted for approval", Toast.LENGTH_LONG).show();
         startActivity( new Intent(TutorRegisterActivity.this , PendingApprovalActivity.class));
+        finish();
     }
 
 }

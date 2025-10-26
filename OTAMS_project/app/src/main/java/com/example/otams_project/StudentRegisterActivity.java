@@ -65,6 +65,7 @@ public class StudentRegisterActivity extends FieldValidatorActivity implements R
     public void writeAccountSuccess() {
         Toast.makeText(this, "Registration submitted for approval", Toast.LENGTH_LONG).show();
         startActivity( new Intent(StudentRegisterActivity.this , PendingApprovalActivity.class));
+        finish();
     }
 
 }

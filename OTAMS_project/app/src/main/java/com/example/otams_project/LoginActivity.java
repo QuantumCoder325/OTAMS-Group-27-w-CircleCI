@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity implements Login {
         Intent intent=new Intent(LoginActivity.this,LoggedInActivity.class);
         intent.putExtra("ACCOUNT", account);
         startActivity(intent);
+        finish();
     }
 
     public void denySignIn() {

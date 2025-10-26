@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.TextView;
 
 
 public class PendingApprovalActivity extends AppCompatActivity {
@@ -18,5 +17,6 @@ public class PendingApprovalActivity extends AppCompatActivity {
     public void onBackToLoginClick(View view){
         Intent intent=new Intent(PendingApprovalActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish();}
+        finish();
+    }
 }

@@ -36,5 +36,6 @@ public class LoggedInActivity extends AppCompatActivity {
             account.logout();
         }
         startActivity( new Intent(LoggedInActivity.this , MainActivity.class));
+        finish();
     }
 }
