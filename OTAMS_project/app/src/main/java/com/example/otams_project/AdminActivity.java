@@ -84,7 +84,7 @@ public class AdminActivity extends AppCompatActivity implements AdminCallback  {
                         @Override
                         public void onApprovalSuccess() {
                             Toast.makeText(AdminActivity.this, "Account approved", Toast.LENGTH_SHORT).show();
-                            if (viewer == "pending") {
+                            if (viewer.equals("pending")) {
                                 accessor.getPendingAccounts(AdminActivity.this);
                             } else {
                                 accessor.getRejectedAccounts(AdminActivity.this);
@@ -101,7 +101,7 @@ public class AdminActivity extends AppCompatActivity implements AdminCallback  {
                         @Override
                         public void onApprovalSuccess() {
                             Toast.makeText(AdminActivity.this, "Account rejected", Toast.LENGTH_SHORT).show();
-                            if (viewer == "pending") {
+                            if (viewer.equals("pending")) {
                                 accessor.getPendingAccounts(AdminActivity.this);
                             } else {
                                 accessor.getRejectedAccounts(AdminActivity.this);
