@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class AdminActivity extends AppCompatActivity implements AdminCallback  {
 
-
+    private Account adminAccount;
     private ListView accountListView;
     private FirebaseAccessor accessor;
     private List<Account> accounts;
@@ -29,7 +29,13 @@ public class AdminActivity extends AppCompatActivity implements AdminCallback  {
         accessor = new FirebaseAccessor();
         viewer = "pending";
         accessor.getPendingAccounts(this);
+        adminAccount = LocalDataStorage.getAccount();
+    }
 
+    public void onResume() {
+        super.onResume();
+        if (adminAccount != LocalDataStorage.getAccount())
+            finish();
     }
 
     public void onPendingClick(View view) {

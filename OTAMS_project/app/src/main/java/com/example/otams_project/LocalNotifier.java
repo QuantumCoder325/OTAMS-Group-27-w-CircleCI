@@ -50,7 +50,9 @@ public class LocalNotifier {
         int requestCode = account.getEmail().hashCode();
 
         Intent openApp = new Intent(caller, MainActivity.class);
-        Intent adminContactIntent = new Intent(caller, AdminContactActivity.class);
+        Intent adminContactIntent = new Intent(caller, LoggedInActivity.class);
+        adminContactIntent.putExtra("LogNewAccount", true);
+        adminContactIntent.putExtra("NewAccount", account);
 
         //No check for build version since it should always be above Marshmallow
         PendingIntent openAppPending = PendingIntent.getActivity(caller, requestCode, openApp, PendingIntent.FLAG_IMMUTABLE);

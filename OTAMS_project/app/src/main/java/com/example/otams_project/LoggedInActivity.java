@@ -18,7 +18,12 @@ public class LoggedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+
         account = LocalDataStorage.getAccount();
+        Account newAccount = (Account) getIntent().getSerializableExtra("NewAccount");
+        if (newAccount != null) {
+            account = newAccount;
+        }
 
         String roleToDisplay = "User";
         String welcomeMessage = "Account should not be null";
@@ -88,6 +93,20 @@ public class LoggedInActivity extends AppCompatActivity {
     public void onAdminButtonClick(View view){
         if(account.getRole().equals("admin")){
             startActivity(new Intent(LoggedInActivity.this, AdminActivity.class));
+            Account temp = new Account("email", "pass", "user", new User("first", "last", "phone"));
+            temp.setStatus("rejected");
+            LocalNotifier.sendRequestStatusNotification(this, temp, false);
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        if (account != LocalDataStorage.getAccount()) {
+            if (!getIntent().getBooleanExtra("LogNewAccount", false)) {
+                finish();
+            } else {
+                account.login();
+            }
         }
     }
 }
