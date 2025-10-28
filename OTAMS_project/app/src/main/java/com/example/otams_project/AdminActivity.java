@@ -89,7 +89,6 @@ public class AdminActivity extends AppCompatActivity implements AdminCallback  {
                             newStatusAccount.setStatus("approved");
 
                             Emailer.sendEmailForRegistrationStatus(account, true);
-                            LocalNotifier.sendRequestStatusNotification(AdminActivity.this, account, true);
                             if (viewer.equals("pending")) {
                                 accessor.getPendingAccounts(AdminActivity.this);
                             } else {
@@ -112,7 +111,6 @@ public class AdminActivity extends AppCompatActivity implements AdminCallback  {
                             newStatusAccount.setStatus("rejected");
 
                             Emailer.sendEmailForRegistrationStatus(newStatusAccount, false);
-                            LocalNotifier.sendRequestStatusNotification(AdminActivity.this, newStatusAccount, false);
                             if (viewer.equals("pending")) {
                                 accessor.getPendingAccounts(AdminActivity.this);
                             } else {
