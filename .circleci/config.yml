@@ -19,7 +19,7 @@ jobs:
           command: ./OTAMS_project_with_CircleCI/gradlew androidDependencies
       - save_cache:
           paths:
-            - ~/.gradle
+            - ~/OTAMS_project_with_CircleCI/.gradle
           key: jars-{{ checksum "OTAMS_project_with_CircleCI/build.gradle" }}-{{ checksum "OTAMS_project_with_CircleCI/app/build.gradle" }}
       - run:
           name: Run Tests
