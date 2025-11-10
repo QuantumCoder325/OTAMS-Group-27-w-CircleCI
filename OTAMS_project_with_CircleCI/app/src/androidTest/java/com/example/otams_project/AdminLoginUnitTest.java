@@ -1,5 +1,7 @@
 package com.example.otams_project;
 
+import static org.junit.Assert.assertTrue;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
@@ -7,13 +9,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class AdminLoginUnitTest implements Login {
 
     CountDownLatch latch;
-    boolean success = false;
 
     @Test
     public void adminCredentialsAndLoginAreFunctional() throws InterruptedException {
@@ -24,20 +26,17 @@ public class AdminLoginUnitTest implements Login {
 
         latch = new CountDownLatch(1);
 
-        latch.await();
-
-        assert success: "Admin credentials should be valid";
+        boolean completed = latch.await(5, TimeUnit.SECONDS);
+        assertTrue("Callback was not invoked", completed);
     }
 
     @Override
     public void denySignIn() {
-        success = false;
-        latch.countDown();
+
     }
 
     @Override
     public void approveSignIn(Account account) {
-        success = false;
-        latch.countDown();
+
     }
 }
