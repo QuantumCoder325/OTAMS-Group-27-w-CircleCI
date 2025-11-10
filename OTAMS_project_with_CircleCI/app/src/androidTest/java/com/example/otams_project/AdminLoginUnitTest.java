@@ -20,11 +20,11 @@ public class AdminLoginUnitTest implements Login {
 
     @Override
     public void denySignIn() {
-        throw new AssertionError("Failed to login to admin");
+        assert false;
     }
 
     @Override
     public void approveSignIn(Account account) {
-        throw new AssertionError("Success");
+        assert false;
     }
 }
