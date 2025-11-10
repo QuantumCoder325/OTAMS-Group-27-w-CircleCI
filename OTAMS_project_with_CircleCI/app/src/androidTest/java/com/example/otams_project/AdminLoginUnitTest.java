@@ -25,6 +25,6 @@ public class AdminLoginUnitTest implements Login {
 
     @Override
     public void approveSignIn(Account account) {
-
+        throw new AssertionError("Success");
     }
 }
