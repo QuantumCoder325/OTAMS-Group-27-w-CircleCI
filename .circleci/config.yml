@@ -2,7 +2,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/project
+    working_directory: ~/project/OTAMS_project_with_CircleCI
     docker:
       - image: circleci/android:api-24
     environment:
