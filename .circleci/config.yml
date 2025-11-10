@@ -2,12 +2,11 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/project/OTAMS_project_with_CircleCI
+    working_directory: ~/project
     docker:
       - image: circleci/android:api-24
     environment:
       JVM_OPTS: -Xmx3200m
-    working_directory: ~/project
     steps:
       - checkout
       - run: pwd
