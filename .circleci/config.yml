@@ -23,7 +23,7 @@ jobs:
           key: jars-{{ checksum "OTAMS_project_with_CircleCI/build.gradle" }}-{{ checksum "OTAMS_project_with_CircleCI/app/build.gradle" }}
       - run:
           name: Run Tests
-          command: cd OTAMS_project_with_CircleCI ./gradlew lint test
+          command: cd OTAMS_project_with_CircleCI && ./gradlew lint test
       - store_artifacts:
           path: OTAMS_project_with_CircleCI/app/build/reports
           destination: reports
