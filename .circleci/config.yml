@@ -2,7 +2,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/project/OTAMS_project_with_CircleCI
+    working_directory: ~/project
     docker:
       - image: circleci/android:api-24
     environment:
@@ -10,4 +10,4 @@ jobs:
     steps:
       - checkout
       - run: pwd
-      - run: ls
+      - run: ls -al OTAMS_project_with_CircleCI/
