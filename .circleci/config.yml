@@ -13,17 +13,17 @@ jobs:
           key: jars-{{ checksum "OTAMS_project_with_CircleCI/build.gradle" }}-{{ checksum "OTAMS_project_with_CircleCI/app/build.gradle" }}
       - run:
           name: chmod permissions
-          command: chmod +x ./OTAMS_project_with_CircleCI/gradlew
+          command: cd OTAMS_project_with_CircleCI && chmod +x ./gradlew
       - run:
           name: Download Dependencies
-          command: ./OTAMS_project_with_CircleCI/gradlew androidDependencies
+          command: cd OTAMS_project_with_CircleCI && ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/OTAMS_project_with_CircleCI/.gradle
           key: jars-{{ checksum "OTAMS_project_with_CircleCI/build.gradle" }}-{{ checksum "OTAMS_project_with_CircleCI/app/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./OTAMS_project_with_CircleCI/gradlew lint test
+          command: cd OTAMS_project_with_CircleCI ./gradlew lint test
       - store_artifacts:
           path: OTAMS_project_with_CircleCI/app/build/reports
           destination: reports
