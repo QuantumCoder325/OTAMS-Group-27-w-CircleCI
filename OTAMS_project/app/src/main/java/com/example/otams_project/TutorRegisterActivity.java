@@ -70,7 +70,7 @@ public class TutorRegisterActivity extends FieldValidatorActivity implements Reg
 
 
         Account account = Tutor.register(firstName, lastName, email, password, phone , degree , courses);
-        FirebaseAccessor accessor = new FirebaseAccessor();
+        FirebaseAccessor accessor = FirebaseAccessor.getInstance();
         accessor.writeNewAccount(this, account);
 
 

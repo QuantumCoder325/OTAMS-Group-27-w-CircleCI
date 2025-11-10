@@ -40,7 +40,7 @@ public class User implements Serializable{
     public static Account register(String firstName, String lastName, String email , String password, String phone){
         User user = new User(firstName, lastName, phone);
         Account account = new Account(email, password, "null", user);
-        FirebaseAccessor accessor = new FirebaseAccessor();
+        FirebaseAccessor accessor = FirebaseAccessor.getInstance();
 
         return account;
     }

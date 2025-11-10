@@ -4,7 +4,7 @@ public class AdminActions {
     private final FirebaseAccessor accessor;
 
     public AdminActions() {
-        accessor = new FirebaseAccessor();
+        accessor = FirebaseAccessor.getInstance();
     }
 
     public void loadPendingAccounts(AdminCallback callback) {

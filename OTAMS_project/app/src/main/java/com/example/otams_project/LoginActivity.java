@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity implements Login {
     public void onLoginButtonClick(View view) {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
-        FirebaseAccessor accessor = new FirebaseAccessor();
+        FirebaseAccessor accessor = FirebaseAccessor.getInstance();
         accessor.doesEmailMatchPassword(this, email, password);
 
 

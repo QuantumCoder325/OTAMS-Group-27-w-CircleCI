@@ -16,9 +16,17 @@ import java.util.ArrayList;
 public class FirebaseAccessor {
 
     private final DatabaseReference database;
+    private static FirebaseAccessor accessor;
 
-    public FirebaseAccessor() {
+    private FirebaseAccessor() {
         database = FirebaseDatabase.getInstance().getReference();
+    }
+
+    public static FirebaseAccessor getInstance() {
+        if (accessor == null) {
+            accessor = new FirebaseAccessor();
+        }
+        return accessor;
     }
 
     @SuppressWarnings("unused")
