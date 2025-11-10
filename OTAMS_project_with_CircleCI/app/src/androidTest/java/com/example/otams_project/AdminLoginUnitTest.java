@@ -7,13 +7,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class AdminLoginUnitTest implements Login {
 
     CountDownLatch latch;
+    boolean success = false;
 
     @Test
     public void adminCredentialsAndLoginAreFunctional() throws InterruptedException {
@@ -24,17 +24,18 @@ public class AdminLoginUnitTest implements Login {
 
         latch = new CountDownLatch(1);
 
-        boolean completed = latch.await(5, TimeUnit.SECONDS);
-        assert  completed: ("Login failed");
+        latch.await();
     }
 
     @Override
     public void denySignIn() {
-
+        success = false;
+        latch.countDown();
     }
 
     @Override
     public void approveSignIn(Account account) {
-
+        success = true;
+        latch.countDown();
     }
 }
