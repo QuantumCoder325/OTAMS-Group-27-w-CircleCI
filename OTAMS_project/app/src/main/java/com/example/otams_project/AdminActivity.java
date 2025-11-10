@@ -1,63 +1,83 @@
 package com.example.otams_project;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-import android.widget.ArrayAdapter;
 import java.util.List;
-import android.widget.ListView;
-import android.widget.Toast;
 
-
-public class AdminActivity extends AppCompatActivity implements AdminCallback  {
+public class AdminActivity extends AppCompatActivity {
 
     private Account adminAccount;
     private ListView accountListView;
-    private FirebaseAccessor accessor;
+    private AdminActions adminActions;
     private List<Account> accounts;
-
-    private String viewer;
+    private String currentView = "pending";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+
         accountListView = findViewById(R.id.accountListView);
-        accessor = new FirebaseAccessor();
-        viewer = "pending";
-        accessor.getPendingAccounts(this);
         adminAccount = LocalDataStorage.getAccount();
+        adminActions = new AdminActions();
+
+        loadPendingAccounts();
     }
 
+    @Override
     public void onResume() {
         super.onResume();
-        if (adminAccount != LocalDataStorage.getAccount())
+        if (adminAccount != LocalDataStorage.getAccount()) {
             finish();
+        }
     }
 
-    public void onPendingClick(View view) {
-        viewer = "pending";
-        accessor.getPendingAccounts(this);
+    private void loadPendingAccounts() {  //method to load pending accounts
+        currentView = "pending";
+        adminActions.loadPendingAccounts(new AdminCallback() {
+            @Override
+            public void onAccountsFetched(List<Account> fetchedAccounts) {
+                accounts = fetchedAccounts;
+                updateAccountList();
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
     }
 
-    public void onRejectedClick(View view) {
-        viewer = "rejected";
-        accessor.getRejectedAccounts(this);
+    private void loadRejectedAccounts() { //method to load rejected accounts
+        currentView = "rejected";
+        adminActions.loadRejectedAccounts(new AdminCallback() {
+            @Override
+            public void onAccountsFetched(List<Account> fetchedAccounts) {
+                accounts = fetchedAccounts;
+                updateAccountList();
+            }
+
+            @Override
+            public void onError(String message) {
+                showToast(message);
+            }
+        });
     }
 
-    public void onBackClick(View view) {
-        finish();
-    }
-
-    public void onAccountsFetched(List<Account> accounts) {
-        this.accounts = accounts;
-        if(accounts.size() == 0){
-            Toast.makeText(this, "No accounts found", Toast.LENGTH_SHORT).show();
+    private void updateAccountList() { //method to update the account list , called when loading accounts or approving/rejecting accounts
+        if (accounts == null || accounts.size() == 0) {
+            showToast("No accounts found");
+            accountListView.setAdapter(null);
             return;
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         for (Account account : accounts) {
             adapter.add(account.toString());
@@ -65,79 +85,81 @@ public class AdminActivity extends AppCompatActivity implements AdminCallback  {
         accountListView.setAdapter(adapter);
 
         accountListView.setOnItemClickListener((parent, view, position, id) -> {
-            Account selectedAccount = accounts.get(position);
-            showApproveRejectDialog(selectedAccount);
+            showAccountDialog(accounts.get(position));
         });
     }
 
-    public void onError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void showApproveRejectDialog(Account account) {
-
+    private void showAccountDialog(Account account) { //dialog for clicking on accounts from ListView
         new AlertDialog.Builder(this)
-                .setTitle("status : " + account.getStatus())
+                .setTitle("Status: " + account.getStatus())
                 .setMessage(account.toFancyString())
                 .setPositiveButton("Approve", (dialog, which) -> {
-                    accessor.approveAccount(account.getEmail(), new ApprovalCallback() {
+                    adminActions.approveAccount(account, new ApprovalCallback() {
                         @Override
                         public void onApprovalSuccess() {
-                            Toast.makeText(AdminActivity.this, "Account approved", Toast.LENGTH_SHORT).show();
+                            showToast("Account approved");
+                            adminActions.reloadAccounts(currentView, new AdminCallback() {
+                                @Override
+                                public void onAccountsFetched(List<Account> fetchedAccounts) {
+                                    accounts = fetchedAccounts;
+                                    updateAccountList();
+                                }
 
-                            Account newStatusAccount = account;
-                            newStatusAccount.setStatus("approved");
-
-                            Emailer.sendEmailForRegistrationStatus(account, true);
-                            if (viewer.equals("pending")) {
-                                accessor.getPendingAccounts(AdminActivity.this);
-                            } else {
-                                accessor.getRejectedAccounts(AdminActivity.this);
-                            }
+                                @Override
+                                public void onError(String message) {
+                                    showToast(message);
+                                }
+                            });
                         }
+
                         @Override
                         public void onApprovalFailure(String message) {
-                            Toast.makeText(AdminActivity.this, "Failed to approve account", Toast.LENGTH_SHORT).show();
+                            showToast("Failed to approve account");
                         }
                     });
                 })
                 .setNegativeButton("Reject", (dialog, which) -> {
-                    accessor.rejectAccount(account.getEmail(), new ApprovalCallback() {
+                    adminActions.rejectAccount(account, new ApprovalCallback() {
                         @Override
                         public void onApprovalSuccess() {
-                            Toast.makeText(AdminActivity.this, "Account rejected", Toast.LENGTH_SHORT).show();
+                            showToast("Account rejected");
+                            adminActions.reloadAccounts(currentView, new AdminCallback() {
+                                @Override
+                                public void onAccountsFetched(List<Account> fetchedAccounts) {
+                                    accounts = fetchedAccounts;
+                                    updateAccountList();
+                                }
 
-                            Account newStatusAccount = account;
-                            newStatusAccount.setStatus("rejected");
-
-                            Emailer.sendEmailForRegistrationStatus(newStatusAccount, false);
-                            if (viewer.equals("pending")) {
-                                accessor.getPendingAccounts(AdminActivity.this);
-                            } else {
-                                accessor.getRejectedAccounts(AdminActivity.this);
-                            }
+                                @Override
+                                public void onError(String message) {
+                                    showToast(message);
+                                }
+                            });
                         }
+
                         @Override
                         public void onApprovalFailure(String message) {
-                            Toast.makeText(AdminActivity.this, "Failed to reject account", Toast.LENGTH_SHORT).show();
+                            showToast("Failed to reject account");
                         }
                     });
                 })
-                .setNeutralButton("Cancel" , null)
+                .setNeutralButton("Cancel", null)
                 .show();
-                }
+    }
 
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 
+    public void onPendingClick(View view) {
+        loadPendingAccounts();
+    }
 
+    public void onRejectedClick(View view) {
+        loadRejectedAccounts();
+    }
 
-
-
-
-
-
-
-
-
-
-
+    public void onBackClick(View view) {
+        finish();
+    }
 }
