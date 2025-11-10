@@ -65,10 +65,6 @@ public class InputValidatorUnitTest {
         assert InputValidator.validateExistence("a") == 1: "Should return be valid";
     }
 
-    @Test
-    public void shouldFail() {
-        assert 1 == 0:"This test should fail";
-    }
 
 
 
