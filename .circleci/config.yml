@@ -2,7 +2,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/project/OTAMS_project_with_CircleCI
+    working_directory: ~/project
     docker:
       - image: circleci/android:api-24
     environment:
@@ -10,22 +10,22 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: jars-{{ checksum "OTAMS_project_with_CircleCI/build.gradle" }}-{{ checksum "OTAMS_project_with_CircleCI/app/build.gradle" }}
       - run:
           name: chmod permissions
-          command: chmod +x ./gradlew
+          command: chmod +x ./OTAMS_project_with_CircleCI/gradlew
       - run:
           name: Download Dependencies
-          command: ./gradlew androidDependencies
+          command: ./OTAMS_project_with_CircleCI/gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: jars-{{ checksum "OTAMS_project_with_CircleCI/build.gradle" }}-{{ checksum "OTAMS_project_with_CircleCI/app/build.gradle" }}
       - run:
           name: Run Tests
-          command: ./gradlew lint test
+          command: ./OTAMS_project_with_CircleCI/gradlew lint test
       - store_artifacts:
-          path: app/build/reports
+          path: OTAMS_project_with_CircleCI/app/build/reports
           destination: reports
       - store_test_results:
-          path: app/build/test-results
+          path: OTAMS_project_with_CircleCI/app/build/test-results
