@@ -2,7 +2,7 @@
 version: 2.1
 jobs:
   build:
-    working_directory: ~/project/app
+    working_directory: ~/OTAMS_project_with_CircleCI
     docker:
       - image: circleci/android:api-24
     environment:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: jars-{{ checksum ".gradle" }}-{{ checksum "app/.gradle" }}
       - run:
           name: chmod permissions
           command: chmod +x ./gradlew
@@ -20,7 +20,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
+          key: jars-{{ checksum ".gradle" }}-{{ checksum "app/.gradle" }}
       - run:
           name: Run Tests
           command: ./gradlew lint test
