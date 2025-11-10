@@ -25,6 +25,8 @@ public class AdminLoginUnitTest implements Login {
         latch = new CountDownLatch(1);
 
         latch.await();
+
+        assert success: "Admin credentials should be valid";
     }
 
     @Override
@@ -35,7 +37,7 @@ public class AdminLoginUnitTest implements Login {
 
     @Override
     public void approveSignIn(Account account) {
-        success = true;
+        success = false;
         latch.countDown();
     }
 }
