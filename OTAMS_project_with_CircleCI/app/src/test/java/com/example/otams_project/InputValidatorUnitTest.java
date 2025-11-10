@@ -57,7 +57,18 @@ public class InputValidatorUnitTest {
         assert InputValidator.validateEmailAddress("tester@test.com") == 1: "Should return be valid";
     }
 
+    @Test
+    public void existenceCorrectlyValidated() {
+        assert InputValidator.validateExistence(null) != 1: "Should be invalid";
+        assert InputValidator.validateExistence("") != 1: "Should be invalid";
 
+        assert InputValidator.validateExistence("a") == 1: "Should return be valid";
+    }
+
+    @Test
+    public void shouldFail() {
+        assert 1 == 0:"This test should fail";
+    }
 
 
 
@@ -113,6 +124,14 @@ public class InputValidatorUnitTest {
         assert InputValidator.validateEmailAddress("tester@@test.com") == -5: "Should return -5";
 
         assert InputValidator.validateEmailAddress("tester@test.com") == 1: "Should return be valid";
+    }
+
+    @Test
+    public void existenceGivesCorrectError() {
+        assert InputValidator.validateExistence(null) == 0: "Should be invalid";
+        assert InputValidator.validateExistence("") == -1: "Should be invalid";
+
+        assert InputValidator.validateExistence("a") == 1: "Should return be valid";
     }
 
 }
