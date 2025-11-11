@@ -5,7 +5,6 @@ public class LocalDataStorage {
     private static Account account = new Account();
     private static boolean loginStatus = false;
 
-
     public static Account getAccount() {
         return account;
     }

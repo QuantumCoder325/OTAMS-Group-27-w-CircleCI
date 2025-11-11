@@ -39,7 +39,7 @@ public class AdminLoginUnitTest implements Login {
 
     @Override
     public void approveSignIn(Account account) {
-        success = false;
+        success = true;
         latch.countDown();
     }
 }
